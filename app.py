@@ -49,10 +49,9 @@ app.layout = dbc.Container(
                 dbc.Col(
                     [
                         html.Div("Sales Dashboard", className="page-eyebrow"),
-                        html.H1("Sales Performance Overview", className="page-title"),
+                        html.H1("DataMate Dashboard", className="page-title"),
                         html.P(
-                            "An interactive dashboard showing revenue, products, locations, channels, and order status.",
-                            className="page-subtitle",
+                            "We take your raw business data and turn it into interactive dashboards that reveal trends, highlight opportunities, and support faster, smarter decisions ",
                         ),
                     ],
                     xs=12,
