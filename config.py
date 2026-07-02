@@ -12,7 +12,7 @@ if not SUPABASE_URL or not SUPABASE_KEY:
         "Missing SUPABASE_URL or SUPABASE_KEY. Check your .env file."
     )
 
-DISPLAY_COLUMNS = [
+TABLE_COLUMNS = [
     "id",
     "sales_date",
     "first_name",
@@ -28,3 +28,4 @@ DISPLAY_COLUMNS = [
     "order_status",
 ]
 
+DISPLAY_COLUMNS = TABLE_COLUMNS
