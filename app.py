@@ -55,7 +55,7 @@ app.layout = dbc.Container(
                 dbc.Col(
                     [
                         html.Div("Sales Dashboard", className="page-eyebrow"),
-                        html.H1("Sales Performance Overview", className="page-title"),
+                        html.H1("DataChum", className="page-title"),
                         html.P(
                             "We turn your data into clear, actionable insights — helping you spot trends, understand performance, and make better decisions faster.",
                             className="page-subtitle",
