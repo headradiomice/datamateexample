@@ -242,3 +242,10 @@ body {
 .DateInput {
     width: 100%;
 }
+
+.page-logo {
+    max-width: 280px;
+    height: auto;
+    display: block;
+    margin: 0 0 12px 0;
+}
