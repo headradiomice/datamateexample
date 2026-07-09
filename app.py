@@ -51,26 +51,94 @@ def landing_page():
                     html.Div(
                         className="landing-card",
                         children=[
-                            html.Img(
-                                src="/assets/logo_v1.png",
-                                className="landing-image",
-                                alt="DataChum logo",
-                            ),
-
-                            html.P(
-                                "We turn your data into clear, actionable insights — helping you spot trends, understand performance, and make better decisions faster.",
-                                className="landing-text",
-                            ),
-
-                            dcc.Link(
-                                dbc.Button(
-                                    "Try the Dashboard",
-                                    color="primary",
-                                    size="lg",
-                                    className="landing-button",
+                            html.Div(
+                                html.Img(
+                                    src="/assets/logo_v2.png",
+                                    className="landing-image",
+                                    alt="DataChum logo",
                                 ),
-                                href="/dashboard",
-                                style={"textDecoration": "none"},
+                                className="landing-logo-wrapper",
+                            ),
+
+                            html.Div(
+                                html.P(
+                                    "We turn your data into clear, actionable insights — helping you spot trends, understand performance, and make better decisions faster.",
+                                    className="landing-text",
+                                ),
+                                className="landing-text-wrapper",
+                            ),
+
+                            html.Div(
+                                html.P(
+                                    "Explore interactive charts, filter your sales data, and manage records in one easy-to-use dashboard.",
+                                    className="landing-text-secondary",
+                                ),
+                                className="landing-text-secondary-wrapper",
+                            ),
+
+                            html.Div(
+                                html.Img(
+                                    src="/assets/block_image_v1.png",
+                                    className="landing-image2",
+                                    alt="DataChum preview image",
+                                ),
+                                className="landing-image2-wrapper",
+                            ),
+
+                            
+
+                            html.Div(
+                                html.P(
+                                    "Every business has at least one spreadsheet that has become too import ant, too complicated, or too frustrating. ",
+                                    className="landing-text-4",
+                                ),
+                                className="landing-text-4-wrapper",
+                            ),
+
+                            html.Div(
+                                html.P(
+                                    "At DataChum, we turn those spreadsheetsinto simple, secure web applications that save time, reduce mistakes, and make information easier to use. ",
+                                    className="landing-text-5",
+                                ),
+                                className="landing-text-5-wrapper",
+                            ),
+
+                            html.Div(
+                                html.P(
+                                    "We'll work with you to understand how your business works and build something that's genuinely usesul - without expecting you to speak 'IT'.",
+                                    className="landing-text-3",
+                                ),
+                                className="landing-text-3-wrapper",
+                            ),
+
+                            html.Div(
+                                html.P(
+                                    "Click the button below to explore our demo dashboard and see what's possible.",
+                                    className="landing-text-6",
+                                ),
+                                className="landing-text-6-wrapper",
+                            ),
+
+                            html.Div(
+                                html.P(
+                                    "If you've got a spreadsheet that's become a headache, we'd love to hear about it. Get in touch with james@datachum.co.uk, tell us what your spreadsheet does, and we'll arrange a chat to see how we can help.",
+                                    className="landing-text-6",
+                                ),
+                                className="landing-text-6-wrapper",
+                            ),
+
+                            html.Div(
+                                dcc.Link(
+                                    dbc.Button(
+                                        "Try the Dashboard",
+                                        color="primary",
+                                        size="lg",
+                                        className="landing-button",
+                                    ),
+                                    href="/dashboard",
+                                    style={"textDecoration": "none"},
+                                ),
+                                className="landing-button-wrapper",
                             ),
                         ],
                     ),
@@ -99,7 +167,7 @@ def dashboard_page():
                         [
                             html.Div("Sales Dashboard", className="page-eyebrow"),
                             html.Img(
-                                src="/assets/logo_v1.png",
+                                src="/assets/logo_v2.png",
                                 className="page-logo",
                                 alt="DataChum logo",
                             ),

@@ -271,6 +271,12 @@ body {
     margin-bottom: 32px;
 }
 
+.landing-image2 {
+    max-width: 500px;
+    width: 100%;
+    height: auto;
+    margin-bottom: 32px;
+}
 .landing-text {
     max-width: 620px;
     margin: 0 auto 34px auto;
@@ -278,6 +284,15 @@ body {
     font-size: 20px;
     line-height: 1.6;
 }
+
+.landing-text-secondary {
+    max-width: 620px;
+    margin: -18px auto 34px auto;
+    color: #5f6b7a;
+    font-size: 17px;
+    line-height: 1.6;
+}
+
 
 .landing-button {
     padding: 14px 30px;
