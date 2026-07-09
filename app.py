@@ -29,9 +29,6 @@ from charts import (
     make_top_products_chart,
 )
 
-
-
-
 app = Dash(
     __name__,
     external_stylesheets=[dbc.themes.FLATLY],
@@ -40,235 +37,315 @@ app = Dash(
 
 server = app.server
 
-
 initial_df = fetch_sales_data()
 
 
-app.layout = dbc.Container(
-    fluid=True,
-    className="app-container",
-    children=[
-        dcc.Store(id="sales-data-store", data=initial_df.to_dict("records")),
 
-        dbc.Row(
-            [
+def landing_page():
+    return dbc.Container(
+        fluid=True,
+        className="landing-page",
+        children=[
+            dbc.Row(
                 dbc.Col(
-                    [
-                        html.Div("Sales Dashboard", className="page-eyebrow"),
-                        html.Img(
+                    html.Div(
+                        className="landing-card",
+                        children=[
+                            html.Img(
+                                src="/assets/logo_v1.png",
+                                className="landing-image",
+                                alt="DataChum logo",
+                            ),
+
+                            html.P(
+                                "We turn your data into clear, actionable insights — helping you spot trends, understand performance, and make better decisions faster.",
+                                className="landing-text",
+                            ),
+
+                            dcc.Link(
+                                dbc.Button(
+                                    "Try the Dashboard",
+                                    color="primary",
+                                    size="lg",
+                                    className="landing-button",
+                                ),
+                                href="/dashboard",
+                                style={"textDecoration": "none"},
+                            ),
+                        ],
+                    ),
+                    xs=12,
+                    md=10,
+                    lg=8,
+                    xl=6,
+                    className="mx-auto",
+                ),
+                className="min-vh-100 align-items-center",
+            )
+        ],
+    )
+
+
+def dashboard_page():
+    return dbc.Container(
+        fluid=True,
+        className="app-container",
+        children=[
+            dcc.Store(id="sales-data-store", data=initial_df.to_dict("records")),
+
+            dbc.Row(
+                [
+                    dbc.Col(
+                        [
+                            html.Div("Sales Dashboard", className="page-eyebrow"),
+                            html.Img(
                                 src="/assets/logo_v1.png",
                                 className="page-logo",
                                 alt="DataChum logo",
                             ),
-                        html.P(
-                            "We turn your data into clear, actionable insights — helping you spot trends, understand performance, and make better decisions faster.",
-                            className="page-subtitle",
-                        ),
-                    ],
-                    xs=12,
-                    lg=8,
-                ),
-                dbc.Col(
-                    [
-                        dbc.Button(
-                            "Refresh Data",
-                            id="refresh-button",
-                            color="primary",
-                            className="refresh-button",
-                            n_clicks=0,
-                        ),
-                        html.Div(
-                            id="last-refresh-text",
-                            className="last-refresh-text",
-                        ),
-                    ],
-                    xs=12,
-                    lg=4,
-                    className="header-actions",
-                ),
-            ],
-            className="align-items-center mb-4",
-        ),
+                            html.P(
+                                "We turn your data into clear, actionable insights — helping you spot trends, understand performance, and make better decisions faster.",
+                                className="page-subtitle",
+                            ),
+                        ],
+                        xs=12,
+                        lg=8,
+                    ),
+                    dbc.Col(
+                        [
+                            dbc.Button(
+                                "Refresh Data",
+                                id="refresh-button",
+                                color="primary",
+                                className="refresh-button",
+                                n_clicks=0,
+                            ),
+                            html.Div(
+                                id="last-refresh-text",
+                                className="last-refresh-text",
+                            ),
+                        ],
+                        xs=12,
+                        lg=4,
+                        className="header-actions",
+                    ),
+                ],
+                className="align-items-center mb-4",
+            ),
 
-        dbc.Tabs(
-            id="main-tabs",
-            active_tab="insights-tab",
-            className="dashboard-tabs mb-4",
-            children=[
-                dbc.Tab(
-                    label="Insights",
-                    tab_id="insights-tab",
-                    children=[
-                        html.Div(
-                            [
-                                html.Div(id="filters-section", children=build_filter_panel(initial_df)),
+            dbc.Tabs(
+                id="main-tabs",
+                active_tab="insights-tab",
+                className="dashboard-tabs mb-4",
+                children=[
+                    dbc.Tab(
+                        label="Insights",
+                        tab_id="insights-tab",
+                        children=[
+                            html.Div(
+                                [
+                                    html.Div(
+                                        id="filters-section",
+                                        children=build_filter_panel(initial_df),
+                                    ),
 
-                                html.Div(id="kpi-section", children=build_kpi_cards(initial_df)),
+                                    html.Div(
+                                        id="kpi-section",
+                                        children=build_kpi_cards(initial_df),
+                                    ),
 
-                                html.Div(id="insights-section", children=build_insight_cards(initial_df)),
+                                    html.Div(
+                                        id="insights-section",
+                                        children=build_insight_cards(initial_df),
+                                    ),
 
-                                dbc.Row(
-                                    [
-                                        dbc.Col(
-                                            dbc.Card(
-                                                dbc.CardBody(
-                                                    [
-                                                        dcc.Graph(
-                                                            id="sales-trend-chart",
-                                                            figure=make_sales_trend_chart(initial_df),
-                                                            config={"displayModeBar": False},
-                                                            style={"height": "420px"},
-                                                        )
-                                                    ]
-                                                ),
-                                                className="chart-card",
-                                            ),
-                                            xs=12,
-                                            className="mb-4",
-                                        ),
-                                    ]
-                                ),
-
-                                dbc.Row(
-                                    [
-                                        dbc.Col(
-                                            dbc.Card(
-                                                dbc.CardBody(
-                                                    [
-                                                        dcc.Graph(
-                                                            id="sales-map",
-                                                            figure=make_sales_map(initial_df),
-                                                            config={"displayModeBar": False},
-                                                            style={"height": "460px"},
-                                                        )
-                                                    ]
-                                                ),
-                                                className="chart-card",
-                                            ),
-                                            xs=12,
-                                            lg=7,
-                                            className="mb-4",
-                                        ),
-                                        dbc.Col(
-                                            dbc.Card(
-                                                dbc.CardBody(
-                                                    [
-                                                        dcc.Graph(
-                                                            id="category-chart",
-                                                            figure=make_sales_by_category_chart(initial_df),
-                                                            config={"displayModeBar": False},
-                                                            style={"height": "460px"},
-                                                        )
-                                                    ]
-                                                ),
-                                                className="chart-card",
-                                            ),
-                                            xs=12,
-                                            lg=5,
-                                            className="mb-4",
-                                        ),
-                                    ],
-                                    className="g-4",
-                                ),
-
-                                dbc.Row(
-                                    [
-                                        dbc.Col(
-                                            dbc.Card(
-                                                dbc.CardBody(
-                                                    [
-                                                        dcc.Graph(
-                                                            id="channel-chart",
-                                                            figure=make_revenue_by_channel_chart(initial_df),
-                                                            config={"displayModeBar": False},
-                                                            style={"height": "420px"},
-                                                        )
-                                                    ]
-                                                ),
-                                                className="chart-card",
-                                            ),
-                                            xs=12,
-                                            lg=6,
-                                            className="mb-4",
-                                        ),
-                                        dbc.Col(
-                                            dbc.Card(
-                                                dbc.CardBody(
-                                                    [
-                                                        dcc.Graph(
-                                                            id="status-chart",
-                                                            figure=make_order_status_chart(initial_df),
-                                                            config={"displayModeBar": False},
-                                                            style={"height": "420px"},
-                                                        )
-                                                    ]
-                                                ),
-                                                className="chart-card",
-                                            ),
-                                            xs=12,
-                                            lg=6,
-                                            className="mb-4",
-                                        ),
-                                    ],
-                                    className="g-4",
-                                ),
-
-                                dbc.Row(
-                                    [
-                                        dbc.Col(
-                                            dbc.Card(
-                                                dbc.CardBody(
-                                                    [
-                                                        dcc.Graph(
-                                                            id="top-products-chart",
-                                                            figure=make_top_products_chart(initial_df),
-                                                            config={"displayModeBar": False},
-                                                            style={"height": "520px"},
-                                                        )
-                                                    ]
-                                                ),
-                                                className="chart-card",
-                                            ),
-                                            xs=12,
-                                            className="mb-4",
-                                        ),
-                                    ]
-                                ),
-
-                                dbc.Card(
-                                    dbc.CardBody(
+                                    dbc.Row(
                                         [
-                                            html.H2("Sales Data", className="section-title"),
-                                            html.P(
-                                                "Use the filters above or the table controls below to explore the underlying records.",
-                                                className="section-subtitle",
+                                            dbc.Col(
+                                                dbc.Card(
+                                                    dbc.CardBody(
+                                                        [
+                                                            dcc.Graph(
+                                                                id="sales-trend-chart",
+                                                                figure=make_sales_trend_chart(initial_df),
+                                                                config={"displayModeBar": False},
+                                                                style={"height": "420px"},
+                                                            )
+                                                        ]
+                                                    ),
+                                                    className="chart-card",
+                                                ),
+                                                xs=12,
+                                                className="mb-4",
                                             ),
-                                            html.Div(id="table-section", children=build_data_table(initial_df)),
                                         ]
                                     ),
-                                    className="table-card",
-                                ),
-                            ],
-                            className="tab-content-wrapper",
-                        )
-                    ],
-                ),
 
-                dbc.Tab(
-                    label="Manage Data",
-                    tab_id="manage-data-tab",
-                    children=[
-                        html.Div(
-                            id="manage-data-tab-content",
-                            children=build_data_management_tab(initial_df),
-                            className="tab-content-wrapper",
-                        )
-                    ],
-                ),
-            ],
-        ),
-    ],
+                                    dbc.Row(
+                                        [
+                                            dbc.Col(
+                                                dbc.Card(
+                                                    dbc.CardBody(
+                                                        [
+                                                            dcc.Graph(
+                                                                id="sales-map",
+                                                                figure=make_sales_map(initial_df),
+                                                                config={"displayModeBar": False},
+                                                                style={"height": "460px"},
+                                                            )
+                                                        ]
+                                                    ),
+                                                    className="chart-card",
+                                                ),
+                                                xs=12,
+                                                lg=7,
+                                                className="mb-4",
+                                            ),
+                                            dbc.Col(
+                                                dbc.Card(
+                                                    dbc.CardBody(
+                                                        [
+                                                            dcc.Graph(
+                                                                id="category-chart",
+                                                                figure=make_sales_by_category_chart(initial_df),
+                                                                config={"displayModeBar": False},
+                                                                style={"height": "460px"},
+                                                            )
+                                                        ]
+                                                    ),
+                                                    className="chart-card",
+                                                ),
+                                                xs=12,
+                                                lg=5,
+                                                className="mb-4",
+                                            ),
+                                        ],
+                                        className="g-4",
+                                    ),
+
+                                    dbc.Row(
+                                        [
+                                            dbc.Col(
+                                                dbc.Card(
+                                                    dbc.CardBody(
+                                                        [
+                                                            dcc.Graph(
+                                                                id="channel-chart",
+                                                                figure=make_revenue_by_channel_chart(initial_df),
+                                                                config={"displayModeBar": False},
+                                                                style={"height": "420px"},
+                                                            )
+                                                        ]
+                                                    ),
+                                                    className="chart-card",
+                                                ),
+                                                xs=12,
+                                                lg=6,
+                                                className="mb-4",
+                                            ),
+                                            dbc.Col(
+                                                dbc.Card(
+                                                    dbc.CardBody(
+                                                        [
+                                                            dcc.Graph(
+                                                                id="status-chart",
+                                                                figure=make_order_status_chart(initial_df),
+                                                                config={"displayModeBar": False},
+                                                                style={"height": "420px"},
+                                                            )
+                                                        ]
+                                                    ),
+                                                    className="chart-card",
+                                                ),
+                                                xs=12,
+                                                lg=6,
+                                                className="mb-4",
+                                            ),
+                                        ],
+                                        className="g-4",
+                                    ),
+
+                                    dbc.Row(
+                                        [
+                                            dbc.Col(
+                                                dbc.Card(
+                                                    dbc.CardBody(
+                                                        [
+                                                            dcc.Graph(
+                                                                id="top-products-chart",
+                                                                figure=make_top_products_chart(initial_df),
+                                                                config={"displayModeBar": False},
+                                                                style={"height": "520px"},
+                                                            )
+                                                        ]
+                                                    ),
+                                                    className="chart-card",
+                                                ),
+                                                xs=12,
+                                                className="mb-4",
+                                            ),
+                                        ]
+                                    ),
+
+                                    dbc.Card(
+                                        dbc.CardBody(
+                                            [
+                                                html.H2("Sales Data", className="section-title"),
+                                                html.P(
+                                                    "Use the filters above or the table controls below to explore the underlying records.",
+                                                    className="section-subtitle",
+                                                ),
+                                                html.Div(
+                                                    id="table-section",
+                                                    children=build_data_table(initial_df),
+                                                ),
+                                            ]
+                                        ),
+                                        className="table-card",
+                                    ),
+                                ],
+                                className="tab-content-wrapper",
+                            )
+                        ],
+                    ),
+
+                    dbc.Tab(
+                        label="Manage Data",
+                        tab_id="manage-data-tab",
+                        children=[
+                            html.Div(
+                                id="manage-data-tab-content",
+                                children=build_data_management_tab(initial_df),
+                                className="tab-content-wrapper",
+                            )
+                        ],
+                    ),
+                ],
+            ),
+        ],
+    )
+
+
+app.layout = html.Div(
+    children=[
+        dcc.Location(id="url", refresh=False),
+        html.Div(id="page-content"),
+    ]
 )
+
+
+@app.callback(
+    Output("page-content", "children"),
+    Input("url", "pathname"),
+)
+def display_page(pathname):
+    if pathname == "/dashboard":
+        return dashboard_page()
+
+    return landing_page()
+
+
+
 
 
 
@@ -584,25 +661,7 @@ def update_dashboard(
     )
 
 
-@app.callback(
-    Output("kpi-section", "children"),
-    Output("sales-map", "figure"),
-    Output("category-chart", "figure"),
-    Output("table-section", "children"),
-    Input("sales-data-store", "data"),
-)
-def update_dashboard(data):
-    df = pd.DataFrame(data)
 
-    if df.empty:
-        df = pd.DataFrame(columns=DISPLAY_COLUMNS)
-
-    return (
-        build_kpi_cards(df),
-        make_sales_map(df),
-        make_sales_by_category_chart(df),
-        build_data_table(df),
-    )
 
 
 if __name__ == "__main__":
