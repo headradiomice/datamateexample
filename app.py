@@ -89,7 +89,7 @@ def landing_page():
 
                             html.Div(
                                 html.P(
-                                    "Every business has at least one spreadsheet that has become too import ant, too complicated, or too frustrating. ",
+                                    "Every business has at least one spreadsheet that has become too important, too complicated, or too frustrating. ",
                                     className="landing-text-4",
                                 ),
                                 className="landing-text-4-wrapper",
@@ -97,7 +97,7 @@ def landing_page():
 
                             html.Div(
                                 html.P(
-                                    "At DataChum, we turn those spreadsheetsinto simple, secure web applications that save time, reduce mistakes, and make information easier to use. ",
+                                    "At DataChum, we turn those spreadsheets into simple, secure web applications that save time, reduce mistakes, and make information easier to use. ",
                                     className="landing-text-5",
                                 ),
                                 className="landing-text-5-wrapper",
@@ -105,7 +105,7 @@ def landing_page():
 
                             html.Div(
                                 html.P(
-                                    "We'll work with you to understand how your business works and build something that's genuinely usesul - without expecting you to speak 'IT'.",
+                                    "We'll work with you to understand how your business works and build something that's genuinely useful - without expecting you to speak 'IT'.",
                                     className="landing-text-3",
                                 ),
                                 className="landing-text-3-wrapper",
